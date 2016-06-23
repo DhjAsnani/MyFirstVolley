@@ -27,15 +27,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+                final RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, ser_url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        textView.setText(response);
+                        requestQueue.stop();
 
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        textView.setText("Something bad happened");
+                        error.printStackTrace();
+                        requestQueue.stop();
 
                     }
                 });
